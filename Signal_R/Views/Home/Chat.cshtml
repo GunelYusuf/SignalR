@@ -1,0 +1,51 @@
+﻿<h1>Chat</h1>
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" /></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+ @section Scripts{
+     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+     <script>
+         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+         connection.start();
+
+         $("#sendButton").click(function () {
+             let userInput= $("#userInput").val();
+             let messageInput = $("#messageInput").val();
+             connection.invoke("SendMessage", userInput, messageInput);
+
+             connection.on("ReceiveMessage", function (user, message) {
+                 console.log(user + " " + message);
+             })
+
+         })
+
+
+     </script>
+
+ }
