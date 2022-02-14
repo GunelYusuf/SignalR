@@ -11,5 +11,7 @@ namespace Signal_R.DAL
         {
 
         }
+
+        DbSet<AppUser> AppUsers { get; set; }
     }
 }

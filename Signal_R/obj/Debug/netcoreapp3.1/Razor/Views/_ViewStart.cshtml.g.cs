@@ -19,8 +19,15 @@ using Signal_R.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "/Users/gunelyusubova/Projects/Signal_R/Signal_R/Views/_ViewImports.cshtml"
+using Signal_R.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f400a24e4f1c1f8dbc87c0f761266a45e781e06b", @"/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9ede49020a67e73b81016830eb6872edca2a7a9c", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bd89e4cb91453a190e8ca578fd965ed7beefcd0c", @"/Views/_ViewImports.cshtml")]
     public class Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

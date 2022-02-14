@@ -17,6 +17,8 @@
     <None Remove="Hub\" />
     <None Remove="Hubs\" />
     <None Remove="Views\Shared\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -31,6 +33,7 @@
     <Folder Include="wwwroot\lib\signalr\dist\" />
     <Folder Include="wwwroot\lib\signalr\dist\browser\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\" />
@@ -47,5 +50,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

@@ -40,7 +40,7 @@ namespace Signal_R
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 opt.Lockout.MaxFailedAccessAttempts = 5;
                 opt.Lockout.AllowedForNewUsers = true;
-            }).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
+            }).AddDefaultTokenProviders().AddEntityFrameworkStores<Context>();
 
             services.AddControllersWithViews();
             services.AddSignalR();

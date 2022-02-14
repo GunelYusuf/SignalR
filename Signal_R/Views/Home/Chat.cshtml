@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-2">User</div>
+        <div class="col-2"></div>
         <div class="col-4"><input type="text" id="userInput" /></div>
     </div>
     <div class="row">
@@ -24,7 +24,12 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <ul id="messagesList"></ul>
+        <ul id="messagesList">
+            @foreach (var item in ViewBag.Users)
+            {
+                <li id="@item.Id" style="list-style:none"><span class="@(item.ConnectedId==null?"gray":"green")" style="height:10px; width:10px; border-radius:50%; display:inline-block"></span>@item.FullName <a asp-controller="Home" asp-action="ShowUserAlert" asp-route-id="@item.Id">Sendddd</a></li>
+            }
+        </ul>
     </div>
 </div>
 
@@ -41,6 +46,16 @@
 
              connection.on("ReceiveMessage", function (user, message) {
                  console.log(user + " " + message);
+             })
+
+             connection.on("Connected", function (id) {
+                 let li = document.getElementById(id);
+
+                 $(li).find("span").removeClass("gray");
+                 $(li).find("span").addClass("green");
+             })
+             connection.on("ShowAlert", function (id) {
+                 alert("Okkkkk");
              })
 
          })

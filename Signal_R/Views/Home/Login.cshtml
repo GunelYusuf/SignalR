@@ -1,0 +1,21 @@
+﻿@model LoginVM
+<div class="container">
+    <div class="row">
+        <form  method="post" class="row g-3">
+            <div class="col-auto">
+                <label for="staticEmail2" class="visually-hidden">UserName</label>
+                <input asp-for="UserName">
+            </div>
+            <div class="col-auto">
+                <label for="inputPassword2" class="visually-hidden">Password</label>
+                <input asp-for="Password" placeholder="Password">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
