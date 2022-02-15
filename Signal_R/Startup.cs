@@ -30,16 +30,7 @@ namespace Signal_R
         {
             services.AddIdentity<AppUser, IdentityRole>(opt =>
             {
-                opt.SignIn.RequireConfirmedEmail = true;
-                opt.Password.RequireLowercase = true;
-                opt.Password.RequiredLength = 7;
-                opt.Password.RequireNonAlphanumeric = true;
-
-                opt.User.RequireUniqueEmail = true;
-
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                opt.Lockout.MaxFailedAccessAttempts = 5;
-                opt.Lockout.AllowedForNewUsers = true;
+               
             }).AddDefaultTokenProviders().AddEntityFrameworkStores<Context>();
 
             services.AddControllersWithViews();

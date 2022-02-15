@@ -5451,7 +5451,7 @@
       "outputPath": "/Users/gunelyusubova/Projects/Signal_R/Signal_R/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/gunelyusubova/.nuget/NuGet/NuGet.Config"
+        "/Users/gunelyusubova/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

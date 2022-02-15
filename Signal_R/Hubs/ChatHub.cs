@@ -33,6 +33,14 @@ namespace Signal_R.Hubs
             return base.OnConnectedAsync();
 
         }
+        public async Task UserKeyup(string id, string typing)
+        {
+            AppUser user = await _userManager.FindByIdAsync(id);
+            await Clients.Client(user.ConnectionId).SendAsync("UserTyping", user.Id, typing);
+        }
+
+
+       
 
     }
 }

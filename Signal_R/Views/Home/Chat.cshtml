@@ -1,66 +1,87 @@
 ﻿<h1>Chat</h1>
 
 <div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
-    </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                        @foreach (var item in ViewBag.Users)
+                        {
+
+                            <li class="clearfix userid" id="@item.Id">
+                                <div class="about">
+                                    <div class="name">@item.FullName</div>
+                                    <span class="@(item.ConnectionId==null?"gray":"green")" style="height:10px;width:10px;border-radius:50%; display:inline-block"></span>
+                                    <a asp-controller="home" asp-action="ShowUserAlert" asp-route-id="@item.Id">send</a>
+                                </div>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+                <div class="chat">
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li class="clearfix">
+                                <div class="message user-message other-message float-right">
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <span id="typing" style="display:none">User Typing</span>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            </div>
+                            <input type="text" id="message" class="form-control" placeholder="Text here">
+                            <input type="submit" id="sendButton" class="form-control" placeholder="Send">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList">
-            @foreach (var item in ViewBag.Users)
-            {
-                <li id="@item.Id" style="list-style:none"><span class="@(item.ConnectedId==null?"gray":"green")" style="height:10px; width:10px; border-radius:50%; display:inline-block"></span>@item.FullName <a asp-controller="Home" asp-action="ShowUserAlert" asp-route-id="@item.Id">Sendddd</a></li>
+
+
+
+@section Scripts{
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script>var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+        connection.start();
+        $(".userid").click(function () {
+            let UserId = $(this).attr("id");
+            $("#message").attr("data-id", `${UserId}`)
+        })
+        $("#sendButton").click(function () {
+            let userMessage = $("#message").val();
+            let UserId = $("#message").attr("data-id");
+            connection.invoke("SendMessageUser", UserId, userMessage);
+        })
+        $('#message').on('keydown', function () {
+            let UserId = $("#message").attr("data-id");
+            connection.invoke("UserKeyup", UserId, "typing");
+        });
+        connection.on("UserTyping", function (id, typing) {
+            if (typing == "typing") {
+                $("#typing").show();
+                console.log("key")
             }
-        </ul>
-    </div>
-</div>
-
- @section Scripts{
-     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
-     <script>
-         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
-         connection.start();
-
-         $("#sendButton").click(function () {
-             let userInput= $("#userInput").val();
-             let messageInput = $("#messageInput").val();
-             connection.invoke("SendMessage", userInput, messageInput);
-
-             connection.on("ReceiveMessage", function (user, message) {
-                 console.log(user + " " + message);
-             })
-
-             connection.on("Connected", function (id) {
-                 let li = document.getElementById(id);
-
-                 $(li).find("span").removeClass("gray");
-                 $(li).find("span").addClass("green");
-             })
-             connection.on("ShowAlert", function (id) {
-                 alert("Okkkkk");
-             })
-
-         })
-
-
-     </script>
-
- }
+            else {
+                $("#typing").hide();
+                console.log("keyend")
+            }
+        })
+        connection.on("ChatUserToUser", function (id, message) {
+            $(".user-message").text(message)
+        })</script>
+}

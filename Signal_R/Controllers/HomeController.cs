@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Signal_R.DAL;
 using Signal_R.Hubs;
 using Signal_R.Models;
 using Signal_R.ViewModels;
@@ -15,12 +17,14 @@ namespace Signal_R.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IHubContext<ChatHub> _hubContext;
+        private readonly Context _context;
 
-        public HomeController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IHubContext<ChatHub> hubContext)
+        public HomeController(Context context, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IHubContext<ChatHub> hubContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _hubContext = hubContext;
+            _context = context;
         }
 
         // GET: /<controller>/
@@ -31,6 +35,7 @@ namespace Signal_R.Controllers
 
         public IActionResult Chat()
         {
+            ViewBag.Users = _context.Users.ToList();
             return View();
         }
 
@@ -47,7 +52,7 @@ namespace Signal_R.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }
